@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class CekLevelPelanggan
@@ -15,7 +16,7 @@ class CekLevelPelanggan
      */
     public function handle(Request $request, Closure $next): Response
     { {
-            if (Auth()->user()->leveluser != 2) {
+            if (Auth::user()->leveluser != 2) {
                 return $next($request);
             }
             return $next($request);
