@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         $user->tanggallahir = "1994-12-08";
         $user->jeniskelamin = "L";
         $user->foto = "default.jpg";
-        $user->folder = 'public/assets/img/user';
+        $user->folder = 'assets/img/user/default.jpg';
         $user->save();
 
         $user = new User;
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
         $user->tanggallahir = "1994-12-08";
         $user->jeniskelamin = "L";
         $user->foto = "default.jpg";
-        $user->folder = 'public/assets/img/user';
+        $user->folder = 'assets/img/user/default.jpg';
         $user->save();
     }
 }

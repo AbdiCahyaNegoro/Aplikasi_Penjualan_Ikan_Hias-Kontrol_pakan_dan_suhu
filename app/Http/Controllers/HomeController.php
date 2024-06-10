@@ -42,10 +42,9 @@ class HomeController extends Controller
 
     public function tampildatauser()
     {
-        // Menggunakan Query Builder untuk mendapatkan semua data dari tabel users
         $users = DB::table('users')->get();
 
         // Mengembalikan tampilan dengan data users
-        return view('users.index', ['users' => $users]);
+        return view('layouts.beranda.masterberanda',$users);
     }
 }

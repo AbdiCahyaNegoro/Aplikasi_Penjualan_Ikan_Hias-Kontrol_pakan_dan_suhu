@@ -347,11 +347,11 @@
 // Sidebar Light
 .sidebar-light {
     .sidebar-brand {
-        color: $gray-700;
+        color: $gray-200;
     }
 
     hr.sidebar-divider {
-        border-top: 1px solid $gray-200;
+        border-top: 5px solid $gray-200;
     }
 
     .sidebar-heading {
@@ -363,7 +363,7 @@
             color: $gray-600;
 
             i {
-                color: $gray-400;
+                color: $gray-200;
             }
 
             &:active,
