@@ -5,7 +5,7 @@ use App\Http\Middleware\CekLevelPelanggan;
 
 use Illuminate\Support\Facades\Route;
 //Sebelum Login, Tamu Bisa Melihat Isi Web, tetapi tidak bisa transaksi
-Route::get('/', [App\Http\Controllers\Controller::class, 'index'])->name('index');
+Route::get('/index', [App\Http\Controllers\Controller::class, 'index'])->name('index');
 
 
 Auth::routes();
@@ -20,7 +20,6 @@ Route::middleware(CekLeveladmin::class)->group(function () {
 });
 
 Route::middleware(CekLevelPelanggan::class)->group(function () {
-    Route::get('/index', [App\Http\Controllers\HomeController::class, 'HalamUtamaPelanggan'])->name('HalamUtamaPelanggan');
-    Route::get('/beli-produk', [App\Http\Controllers\ProdukController::class, 'beliProduk'])->name('beli-produk');
+    Route::get('/produk/{id_produk}', [App\Http\Controllers\ProdukController::class, 'detailproduk'])->name('detailproduk');
 
 });

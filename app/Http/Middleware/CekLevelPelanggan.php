@@ -16,10 +16,10 @@ class CekLevelPelanggan
      */
     public function handle(Request $request, Closure $next): Response
     { {
-            if (Auth::user()->leveluser != 2) {
-                return $next($request);
-            }
+        if (Auth::user()->leveluser != 2) {
             return $next($request);
+        }
+        return $next($request);
         }
     }
 }

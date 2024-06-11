@@ -1,4 +1,4 @@
---------------------------------------------------------------------- File Name: style.css ---------------------------------------------------------------------*/
+/* --------------------------------------------------------------------- File Name: style.css ---------------------------------------------------------------------*/
 /*--------------------------------------------------------------------- import Files ---------------------------------------------------------------------*/
 
 @import url(animate.min.css);
@@ -228,14 +228,18 @@ button {
 
 .header_section_top {
     width: 100%;
-    background-color: #683003;
+    background-image: linear-gradient(180deg, #224abe 10%, #36b9cc 100%);
     clip-path: polygon(0 0, 100% 0, 96% 100%, 2% 100%);
     height: 100px;
     display: flex;
     align-items: center;
     justify-content: space-between; /* Menggunakan space-between untuk memisahkan elemen di sebelah kiri dan kanan */
     padding: 0 20px; /* Menambahkan padding agar tidak terlalu dekat dengan tepi */
+    border-bottom-left-radius: 20px; /* Membuat sudut kiri bawah rounded */
+    border-bottom-right-radius: 20px; /* Membuat sudut kanan bawah rounded */
+    overflow: hidden; /* Agar elemen anak tidak keluar dari border-radius */
 }
+
 
 .custom_menu ul {
     margin: 0;
@@ -247,20 +251,21 @@ button {
 
 .custom_menu li {
     font-size: 16px;
-    color: #f1f1f1;
-    margin-left: 20px;
-
+    color: #2c2c2c;
+    margin-left: 90px;
+    text-align: center;
 }
 
 .custom_menu li a {
-    color: #f1f1f1;
-    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+    font-family: Arial, Helvetica, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     text-decoration: none;
     transition: color 0.3s;
+    
 }
 
 .custom_menu li a:hover {
-    color: #f26522;
+    color: #ffffff;
 }
 
 
@@ -322,7 +327,7 @@ button {
 }
 
 .sidenav a:hover {
-    color: #f26522;
+    color: #ffffff;
 }
 
 .sidenav .closebtn {
@@ -372,7 +377,7 @@ button {
 }
 
 .btn-secondary:hover {
-    color: #fff;
+    color: #000000;
     background-color: #30302e;
     border-color: #30302e;
 }
@@ -610,7 +615,8 @@ a:hover {
 
 .buy_bt {
     float: left;
-    width: 100%;
+    width: 50%;
+    text-align: center;
 }
 
 .buy_bt a {
@@ -980,4 +986,22 @@ input.mail_bt::placeholder {
 }
 
 
+.footer_section {
+    background-color: #ffffff; /* Warna latar belakang */
+    padding: 50px 0; /* Ruang di atas dan bawah konten di dalam footer */
+}
+
+.footer_section .container {
+    max-width: 1200px; /* Lebar maksimum kontainer */
+    margin: auto; /* Posisi horizontal ke tengah */
+}
+
+.footer_section h3 {
+    color: #333; /* Warna teks judul */
+}
+
+.footer_section p {
+    color: #666; /* Warna teks isi */
+    margin-bottom: 10px; /* Ruang di bawah setiap paragraf */
+}
 /* copyright section end */

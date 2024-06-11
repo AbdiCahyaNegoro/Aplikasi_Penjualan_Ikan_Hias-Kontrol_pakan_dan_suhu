@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/index';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -44,29 +44,5 @@ class LoginController extends Controller
      *
      * @return RedirectResponse
      */
-    public function login(Request $request): RedirectResponse
-    {   
-        $input = $request->all();
-     
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-     
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
-        {
-            if (auth()->user()->leveluser == 1 ) {
-                return redirect()->route('index');
-            }else if (auth()->user()->leveluser == 2) {
-                return redirect()->route('index');
-            }else{
-                return redirect()->route('index');
-            }
-        }else{
-            return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
-        }
-          
-    }
-}
+   }
 

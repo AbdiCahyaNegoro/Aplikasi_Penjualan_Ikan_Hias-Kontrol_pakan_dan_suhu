@@ -131,9 +131,9 @@
     .banner_bg_main {
         background-size: 100% 100%;
     }
-    .tshirt_img {
+    .produk_img {
         margin: 20px 0px;
-        min-height: 360px;
+        min-height: 200px;
     }
     #main_slider a.carousel-control-next {
         right: 40px;

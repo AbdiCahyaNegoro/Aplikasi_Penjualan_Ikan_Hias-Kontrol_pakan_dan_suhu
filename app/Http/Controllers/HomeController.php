@@ -40,11 +40,5 @@ class HomeController extends Controller
         return view ('index');
     }
 
-    public function tampildatauser()
-    {
-        $users = DB::table('users')->get();
 
-        // Mengembalikan tampilan dengan data users
-        return view('layouts.beranda.masterberanda',$users);
-    }
 }

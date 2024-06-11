@@ -67,3 +67,10 @@
     max-width: 100% / $count;
   }
 }
+
+.divider {
+    border: none;
+    height: 1px;
+    background-color: #ccc; /* Warna sesuaikan dengan preferensi Anda */
+    margin: 20px 0; /* Sesuaikan margin sesuai kebutuhan */
+}
