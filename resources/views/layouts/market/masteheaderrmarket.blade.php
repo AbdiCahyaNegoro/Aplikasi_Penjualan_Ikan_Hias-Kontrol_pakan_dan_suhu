@@ -36,7 +36,7 @@
                                         <li><a href="{{ route('beranda') }}">DASHBOARD ADMIN</a></li>
                                     @endif
                                     @if (Auth::user()->leveluser == 2)
-                                        <li><a href="#">
+                                        <li><a href="{{ route('keranjang') }}">
                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                 <span class="padding_10">KERANJANG</span></a>
                                         </li>
@@ -91,7 +91,7 @@
         <!-- copyright section start -->
         <div class="copyright_section">
             <div class="container">
-                <p class="copyright_text">&copy; <?= date('Y') ?> ABDI CAHYA NEGORO TEKNIK KOMPUTER POLITEKNIK SUKABUMI</p>
+                <p class="copyright_text">&copy; <?= date('Y') ?> ABDI CAHYA NEGORO - TEKNIK KOMPUTER POLITEKNIK SUKABUMI</p>
             </div>
         </div>
     </footer>

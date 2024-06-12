@@ -1,5 +1,5 @@
 @extends('layouts.market.masteheaderrmarket')
-@section('title','Detail Produk')
+@section('title', 'Detail Produk')
 
 @section('isimarket')
     <div class="fashion_section">
@@ -16,8 +16,8 @@
                             <img src="{{ asset($produk->folder . '/' . $produk->nama_foto) }}" class="img-fluid"
                                 alt="{{ $produk->nama_produk }}">
                                 
-                            <p class="mt-3" >Deskripsi Ikan : <p style="font-style: italic">{{ $produk->deskripsiproduk }}</p></p>
-                            <p class="mt-3" >Jenis Ikan : <p style="font-style: italic">{{ $produk->jenisproduk }}</p></p>
+                            <p class="mt-3">Deskripsi Ikan: <span style="font-style: italic">{{ $produk->deskripsiproduk }}</span></p>
+                            <p class="mt-3">Jenis Ikan: <span style="font-style: italic">{{ $produk->jenis }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -37,8 +37,9 @@
                         </div>
                         <div class="card-body">
                             <!-- Form untuk pesan produk -->
-                            <form action="" method="POST">
+                            <form action="{{ route('tambahkankeranjang') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="product_id" value="{{ $produk->id_produk }}">
                                 <div class="form-group">
                                     <label for="jumlah">Jumlah:</label>
                                     <input type="number" class="form-control" id="jumlah" name="jumlah" min="1"

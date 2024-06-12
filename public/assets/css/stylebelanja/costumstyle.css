@@ -960,7 +960,7 @@ input.mail_bt::placeholder {
 .copyright_section {
     width: 100%;
     float: left;
-    background-color: #683003;
+    background-image: linear-gradient(180deg, #36b9cc 10%, #224abe 100%);
     height: auto;
 }
 

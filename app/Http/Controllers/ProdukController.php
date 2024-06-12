@@ -12,20 +12,12 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
     }
 
-    /**
-     * Display the specified resource.
-     */  
     public function tampildataproduk()
     {
         // Ambil semua data produk dari database
@@ -34,31 +26,29 @@ class ProdukController extends Controller
         // Kirim data ke view
         return view('index', compact('produk'));
     }
-     /**
-     * Show the form for editing the specified resource.
-     */
+
+
     public function edit(produk $produk)
     {
-        //
     }
 
     public function detailproduk($idproduk)
-        {
-            // Ambil data pegawai berdasarkan NIP dan nama jabatan pegawai
-            $produk = produk::where('id_produk', $idproduk)->first();
-        
-            // Jika data produk ditemukan
-            if ($produk) {
-                // Kembalikan view dengan detail produk
-                return view('market.detailproduk', ['produk' => $produk]);
-            } else {
-                // Jika data produk tidak ditemukan, kembalikan halaman error atau tindakan yang sesuai
-                return redirect()->back()->with('error', 'Produk tidak ditemukan.');
-            }
-        }   
- /**
-     * Remove the specified resource from storage.
-     */
+    {
+        // Ambil data pegawai berdasarkan NIP dan nama jabatan pegawai
+        $produk = Produk::where('produk.id_produk', $idproduk)
+        ->leftjoin('jenisproduk', 'produk.jenisproduk_id', '=', 'jenisproduk.id_jenisproduk')
+        ->first();
+
+        // Jika data produk ditemukan
+        if ($produk) {
+            // Kembalikan view dengan detail produk
+            return view('market.detailproduk', ['produk' => $produk]);
+        } else {
+            // Jika data produk tidak ditemukan, kembalikan halaman error atau tindakan yang sesuai
+            return redirect()->back()->with('error', 'Produk tidak ditemukan.');
+        }
+    }
+
     public function destroy(produk $produk)
     {
         //
@@ -68,4 +58,6 @@ class ProdukController extends Controller
         return view('market.pesan');
     }
 
+   
+    
 }

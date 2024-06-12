@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nama_produk',100);
             $table->decimal('harga_satuan',10,2);
             $table->integer('stok');
-            $table->string('jenisproduk');
+            $table->unsignedInteger('jenisproduk_id'); // Foreign key ke tabel jenis_produk
+            $table->foreign('jenisproduk_id')->references('id_jenisproduk')->on('jenisproduk');
             $table->string('deskripsiproduk');
             $table->string('nama_foto',50);
             $table->string('folder',50);

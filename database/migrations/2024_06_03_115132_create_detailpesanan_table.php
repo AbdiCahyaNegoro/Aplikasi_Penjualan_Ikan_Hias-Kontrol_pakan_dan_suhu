@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
             $table->unsignedInteger('id_produk');
             $table->foreign('id_produk')->references('id_produk')->on('produk');
-            $table->integer('jumlah');
             $table->integer('qty');
             $table->decimal('harga_satuan',10,2);
         });

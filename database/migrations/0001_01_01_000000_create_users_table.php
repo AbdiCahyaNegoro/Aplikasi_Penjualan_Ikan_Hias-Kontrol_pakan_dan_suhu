@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email',100)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',255);
-            $table->string('leveluser',5);
+            $table->enum('leveluser', ['1','2']);
             $table->string('alamat',255);
             $table->date('tanggallahir');
             $table->enum('jeniskelamin',['L','P']);

@@ -50,14 +50,16 @@
                                         {{ $item->harga_satuan }}</span></p><br>
                                 <div class="btn_main">
                                     @auth
-                                        <div class="buy_bt"><a href="">Tambahkan<i class="fa fa-cart-arrow-down"></i></a>
+                                        <div class="buy_bt"><a
+                                                href="{{ route('tambahkankeranjang2', $item->id_produk) }}">Tambahkan<i
+                                                    class="fa fa-cart-arrow-down"></i></a>
                                         </div>
-                                        <div class="buy_bt"><a href="{{ route('detailproduk', $item->id_produk) }}">Beli
-                                                Sekarang</a></div>
+                                        <div class="buy_bt"><a href="{{ route('detailproduk', $item->id_produk) }}">Lihat
+                                                Detail</a></div>
                                     @else
                                         <div class="buy_bt"><a href="{{ route('login') }}">Tambahkan<i
                                                     class="fa fa-cart-arrow-down"></i></a></div>
-                                        <div class="buy_bt"><a href="{{ route('login') }}">Beli Sekarang</a></div>
+                                        <div class="buy_bt"><a href="{{ route('login') }}">Lihat Detail</a></div>
                                     @endauth
                                 </div>
                             </div>
