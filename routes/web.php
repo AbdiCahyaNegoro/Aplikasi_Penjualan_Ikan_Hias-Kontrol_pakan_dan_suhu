@@ -32,7 +32,7 @@ Route::middleware(CekLevelPelanggan::class)->group(function () {
 
     //PEMBAYARAN
     Route::post('/keranjang', [App\Http\Controllers\KeranjangController::class, 'keranjangkepesanan'])->name('keranjangkepesanan');
-   Route::get('/pesanan', [App\Http\Controllers\PesananController::class, 'pesanan'])->name('pesanantampil');
+    Route::get('/pesanan', [App\Http\Controllers\PesananController::class, 'pesanan'])->name('pesanantampil');
 
 });
 
