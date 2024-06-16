@@ -14,4 +14,5 @@ class Keranjang extends Model
     protected $fillable = [
         'quantity',
     ];
+    public $timestamps = false;
 }

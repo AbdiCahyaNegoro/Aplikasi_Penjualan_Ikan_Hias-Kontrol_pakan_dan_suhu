@@ -15,11 +15,10 @@ class CekLevelPelanggan
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    { {
-        if (Auth::user()->leveluser != 2) {
-            return $next($request);
+    {
+        if (Auth::check() && Auth::user()->leveluser != 2) {
+            return response()->view('error403');
         }
         return $next($request);
-        }
     }
 }

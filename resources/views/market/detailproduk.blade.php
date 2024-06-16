@@ -5,6 +5,11 @@
     <div class="fashion_section">
         <div class="container">
             <br><br>
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             <h1>Detail Produk</h1>
             <div class="row">
                 <div class="col-md-6">
@@ -15,8 +20,9 @@
                         <div class="card-body">
                             <img src="{{ asset($produk->folder . '/' . $produk->nama_foto) }}" class="img-fluid"
                                 alt="{{ $produk->nama_produk }}">
-                                
-                            <p class="mt-3">Deskripsi Ikan: <span style="font-style: italic">{{ $produk->deskripsiproduk }}</span></p>
+
+                            <p class="mt-3">Deskripsi Ikan: <span
+                                    style="font-style: italic">{{ $produk->deskripsiproduk }}</span></p>
                             <p class="mt-3">Jenis Ikan: <span style="font-style: italic">{{ $produk->jenis }}</span></p>
                         </div>
                     </div>
@@ -37,15 +43,15 @@
                         </div>
                         <div class="card-body">
                             <!-- Form untuk pesan produk -->
-                            <form action="{{ route('tambahkankeranjang') }}" method="POST">
+                            <form action="{{ route('tambahkankeranjang1')}}" method="POST">
                                 @csrf
-                                <input type="hidden" name="product_id" value="{{ $produk->id_produk }}">
+                                <input type="hidden" name="id_produk" value="{{ $produk->id_produk}}">
                                 <div class="form-group">
                                     <label for="jumlah">Jumlah:</label>
                                     <input type="number" class="form-control" id="jumlah" name="jumlah" min="1"
                                         max="{{ $produk->stok }}" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Pesan Sekarang</button>
+                                <button type="submit" class="btn btn-primary">Masuk Keranjang</button>
                             </form>
                         </div>
                     </div>

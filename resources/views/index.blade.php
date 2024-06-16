@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="logo"><a href="{{ url('/') }}"><img src="assets/img/logobrand.png" width="300px"></a>
+                    <div class="logo"><a href="{{ url('/index') }}"><img src="{{ asset('assets/img/logobrand.png') }}" width="300px"></a>
                     </div>
                 </div>
             </div>
@@ -31,15 +31,21 @@
             </div>
         </div>
     </div>
-    </div>
     <!-- header section end -->
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="fashion_section">
         <div class="container">
             <h1 class="fashion_taital">KOLEKSI</h1>
             <div class="fashion_section_2">
                 <div class="row">
                     @foreach ($produk as $item)
-                        <div class="col-sm-4 col-sm-2">
+                        <div class="col-sm-4">
                             <div class="box_main">
                                 <h4 class="shirt_text">{{ $item->nama_produk }}</h4>
                                 <div class="produk_img">
@@ -47,7 +53,7 @@
                                         alt="{{ $item->nama_produk }}">
                                 </div><br>
                                 <p class="price_text">Harga <span style="color: #262626;">Rp.
-                                        {{ $item->harga_satuan }}</span></p><br>
+                                        {{ number_format($item->harga_satuan, 0, ',', '.') }}</span></p><br>
                                 <div class="btn_main">
                                     @auth
                                         <div class="buy_bt"><a

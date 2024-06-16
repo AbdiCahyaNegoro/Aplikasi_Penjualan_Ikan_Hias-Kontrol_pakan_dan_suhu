@@ -2,27 +2,37 @@
 
 use App\Http\Middleware\CekLeveladmin;
 use App\Http\Middleware\CekLevelPelanggan;
-
 use Illuminate\Support\Facades\Route;
-//Sebelum Login, Tamu Bisa Melihat Isi Web, tetapi tidak bisa transaksi
-Route::get('/index', [App\Http\Controllers\Controller::class, 'index'])->name('index');
 
 
-Auth::routes();
-
-
-// Route untuk menampilkan semua produk di file index
+//AKSES UMUM
+Route::get('/index', [App\Http\Controllers\Controller::class, 'tampildataproduk'])->name('tampildataproduk');
 Route::get('/', [App\Http\Controllers\ProdukController::class, 'tampildataproduk'])->name('tampildataproduk');
 
+
+//AKSES PENGGUNA
+Auth::routes();
+
 Route::middleware(CekLeveladmin::class)->group(function () {
+    Route::get('/admin', [App\Http\Controllers\Controller::class, 'index'])->name('admin');
     Route::get('/beranda', [App\Http\Controllers\HomeController::class, 'BerandaAdmin'])->name('beranda');
     Route::get('/pakanikan', [App\Http\Controllers\PakanIkanController::class, 'pakanikan'])->name('pakanikan');
+    Route::get('/suhuair', [App\Http\Controllers\SuhuAirController::class, 'suhuair'])->name('suhuair');
 });
 
 Route::middleware(CekLevelPelanggan::class)->group(function () {
+    Route::get('/index', [App\Http\Controllers\Controller::class, 'index'])->name('index');
+    
+    //KERANJANG
     Route::get('/produk/{id_produk}', [App\Http\Controllers\ProdukController::class, 'detailproduk'])->name('detailproduk');
-    Route::post('/keranjang', [App\Http\Controllers\KeranjangController::class, 'TambahKeranjangDariDetail'])->name('tambahkankeranjang1');
-    Route::post('/', [App\Http\Controllers\KeranjangController::class, 'TambahKeranjangLangsung'])->name('tambahkankeranjang2');
+    Route::post('/tambahproduk', [App\Http\Controllers\KeranjangController::class, 'TambahKeranjangDariDetail'])->name('tambahkankeranjang1');
+    Route::get('/index/{id_produk}', [App\Http\Controllers\KeranjangController::class, 'TambahKeranjangLangsung'])->name('tambahkankeranjang2');
     Route::get('/keranjang', [App\Http\Controllers\KeranjangController::class, 'tampilkeranjang'])->name('keranjang');
     Route::delete('/keranjang/{id}/hapus', [App\Http\Controllers\KeranjangController::class, 'hapusItemKeranjang'])->name('hapusItemKeranjang');
+
+    //PEMBAYARAN
+    Route::post('/keranjang', [App\Http\Controllers\KeranjangController::class, 'keranjangkepesanan'])->name('keranjangkepesanan');
+   Route::get('/pesanan', [App\Http\Controllers\PesananController::class, 'pesanan'])->name('pesanantampil');
+
 });
+

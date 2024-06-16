@@ -39,10 +39,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
-    /**
-     * Create a new controller instance.
-     *
-     * @return RedirectResponse
-     */
-   }
 
+    protected function authenticated(Request $request, $user)
+    {
+        // Jika pengguna memiliki level tertentu, arahkan ke rute yang berbeda
+        if ($user->leveluser == 1) {
+            return redirect()->route('admin');
+        } elseif ($user->leveluser == 2) {
+            return redirect()->route('index');
+        }
+
+        // Default redirect
+        return redirect()->intended($this->redirectPath());
+    }
+}

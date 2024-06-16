@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\produk;
-use Illuminate\Support\Facades\DB;
-
 class ProdukController extends Controller
 {
     /**

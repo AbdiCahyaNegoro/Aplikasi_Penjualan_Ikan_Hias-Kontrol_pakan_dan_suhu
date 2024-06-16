@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" href={{asset('assets/css/stylebelanja/costumstyle.css')}}>
     <link rel="stylesheet" href={{asset('assets/css/stylebelanja/responsive.css')}}>
     <link rel="stylesheet" href={{asset('assets/css/stylebelanja/jquery.mCustomScrollbar.min.css')}}>
+    <link rel="stylesheet" type="text/css" href={{asset('assets/vendor/bootstrap/scss/_alert.scss')}}>
+    
 </head>
 
 <body>
@@ -25,7 +27,7 @@
                     <div class="col-sm-12 text-center">
                         <div class="custom_menu">
                             <ul>
-                               <span><li><a href="{{ url('/') }}"> <img src={{asset('assets/img/logobrand.png')}} width="200px" ></li></span> 
+                               <span><li><a href="{{ route('index') }}"> <img src={{asset('assets/img/logobrand.png')}} width="200px" ></li></span> 
                                 {{-- Menu Tamu --}}
                                 @guest
                                     <li><a href="{{ route('login') }}">LOGIN</a></li>
@@ -40,7 +42,7 @@
                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                 <span class="padding_10">KERANJANG</span></a>
                                         </li>
-                                        <li><a href="#">
+                                        <li><a href="{{route('pesanantampil')}}">
                                             <span class="padding_10">PESANAN</span></a>
                                     </li>
                                     @endif

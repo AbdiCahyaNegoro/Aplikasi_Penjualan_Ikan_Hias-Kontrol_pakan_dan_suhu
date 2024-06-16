@@ -65,7 +65,7 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('suhuair') }}">
                     <i class="fa fa-fire" style="font-size: 16px"></i>
                     <span style="font-size: 16px">Suhu Air</span>
                 </a>

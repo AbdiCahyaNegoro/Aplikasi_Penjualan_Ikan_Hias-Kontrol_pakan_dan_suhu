@@ -16,10 +16,10 @@ class CekLeveladmin
      */
     public function handle(Request $request, Closure $next): Response
     { {
-            if (Auth::user()->leveluser != 1) {
-                return $next($request);
-            }
-            return $next($request);
+        if (Auth::check() && Auth::user()->leveluser != 1) {
+            return response()->view('error403');
+        }
+        return $next($request);
         }
     }
 }
