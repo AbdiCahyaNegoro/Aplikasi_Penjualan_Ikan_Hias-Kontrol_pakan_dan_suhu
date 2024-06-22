@@ -63,14 +63,6 @@
                 </a>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('suhuair') }}">
-                    <i class="fa fa-fire" style="font-size: 16px"></i>
-                    <span style="font-size: 16px">Suhu Air</span>
-                </a>
-            </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -80,7 +72,7 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link"  href="{{ route('pelanggan') }}">
                     <i class="fa fa-users" style="font-size: 16px"></i>
                     <span style="font-size: 16px">Data Pelanggan</span>
                 </a>
