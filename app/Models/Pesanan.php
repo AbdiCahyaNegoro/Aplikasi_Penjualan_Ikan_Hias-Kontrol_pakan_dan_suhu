@@ -14,8 +14,9 @@ class Pesanan extends Model
 
     protected $fillable = [
         'id_user',
+        'status',
         'tanggalpesanan',
         'totalpesanan',
-        'statuspesanan'
     ];
+    public $timestamps = false;
 }

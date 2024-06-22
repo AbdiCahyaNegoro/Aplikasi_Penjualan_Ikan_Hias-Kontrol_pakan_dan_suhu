@@ -32,7 +32,7 @@ class ProdukController extends Controller
 
     public function detailproduk($idproduk)
     {
-        // Ambil data pegawai berdasarkan NIP dan nama jabatan pegawai
+        // Ambil Data Produk
         $produk = Produk::where('produk.id_produk', $idproduk)
         ->leftjoin('jenisproduk', 'produk.jenisproduk_id', '=', 'jenisproduk.id_jenisproduk')
         ->first();

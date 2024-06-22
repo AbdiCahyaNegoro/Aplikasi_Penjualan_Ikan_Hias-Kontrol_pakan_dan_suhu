@@ -29,10 +29,17 @@ Route::middleware(CekLevelPelanggan::class)->group(function () {
     Route::get('/index/{id_produk}', [App\Http\Controllers\KeranjangController::class, 'TambahKeranjangLangsung'])->name('tambahkankeranjang2');
     Route::get('/keranjang', [App\Http\Controllers\KeranjangController::class, 'tampilkeranjang'])->name('keranjang');
     Route::delete('/keranjang/{id}/hapus', [App\Http\Controllers\KeranjangController::class, 'hapusItemKeranjang'])->name('hapusItemKeranjang');
+    Route::post('/keranjang', [App\Http\Controllers\KeranjangController::class, 'keranjangkepesanan'])->name('keranjangkepesanan');
 
     //PEMBAYARAN
-    Route::post('/keranjang', [App\Http\Controllers\KeranjangController::class, 'keranjangkepesanan'])->name('keranjangkepesanan');
-    Route::get('/pesanan', [App\Http\Controllers\PesananController::class, 'pesanan'])->name('pesanantampil');
+    Route::get('/pesanan', [App\Http\Controllers\PesananController::class, 'pesananbelumbayar'])->name('tampilpesananbelumbayar');
+    Route::post('/bayarpesanan/{idpesanan}', [App\Http\Controllers\PesananController::class, 'bayarpesanan'])->name('bayarpesanan');
+
+    Route::get('/sudahbayar', [App\Http\Controllers\PesananController::class, 'sudahbayar'])->name('tampildatasudahbayar');
+
+
+    Route::get('/dikirim', [App\Http\Controllers\PesananController::class, 'dikirim'])->name('tampildatadikirim');
+    Route::get('/dibatalkan', [App\Http\Controllers\PesananController::class, 'dibatalkan'])->name('tampildatadibatalkan');
 
 });
 

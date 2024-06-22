@@ -19,4 +19,6 @@ class DetailPesanan extends Model
         'qty', 
         'harga_satuan',
     ];
+    
+    public $timestamps = false;
 }

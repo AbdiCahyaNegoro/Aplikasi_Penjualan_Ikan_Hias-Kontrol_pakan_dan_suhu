@@ -23,7 +23,7 @@ class KeranjangController extends Controller
         return view('index');
     }
 
-    public function TambahKeranjangDariDetail(Request $request )
+    public function TambahKeranjangDariDetail(Request $request)
     {
         $request->validate([
             'id_produk' => 'required|exists:produk,id_produk',
@@ -131,8 +131,6 @@ class KeranjangController extends Controller
     }
 
 
-
-
     public function hapusItemKeranjang($id_keranjang)
     {
         // Temukan item keranjang berdasarkan ID
@@ -157,42 +155,51 @@ class KeranjangController extends Controller
     }
 
 
-    
+
     public function keranjangkepesanan(Request $request)
     {
         // Dapatkan ID pengguna yang saat ini masuk
         $userId = auth()->id();
 
         // Ambil semua item di keranjang pengguna
-        $keranjangItems = Keranjang::where('id_user', $userId)->get();
+        $keranjangItems = DB::table('keranjang')
+            ->leftJoin('produk', 'keranjang.id_produk', '=', 'produk.id_produk')
+            ->select('keranjang.*', 'produk.harga_satuan')
+            ->where('keranjang.id_user', $userId)
+            ->get();
 
-        // Hitung total harga
+        // Jika keranjang kosong, langsung kembalikan
+        if ($keranjangItems->isEmpty()) {
+            return redirect()->route('keranjang')->with('error', 'Keranjang belanja Anda kosong.');
+        }
+
+        // Hitung total harga pesanan
         $totalHarga = $keranjangItems->sum(function ($item) {
-            return $item->quantity * $item->produk->harga_satuan;
+            return $item->quantity * $item->harga_satuan;
         });
 
         // Buat pesanan baru
         $pesanan = Pesanan::create([
             'id_user' => $userId,
+            'status'=>'Belum Bayar',
             'tanggalpesanan' => now(),
-            'status' => 'Belum Bayar',
-            'total_harga' => $totalHarga,
+            'totalpesanan' => $totalHarga,
         ]);
 
-        // Pindahkan item dari keranjang ke detail pesanan
+        // Tambahkan detail pesanan untuk setiap item keranjang
         foreach ($keranjangItems as $item) {
             DetailPesanan::create([
-                'pesanan_id' => $pesanan->id_pesanan,
+                'id_pesanan' => $pesanan->id_pesanan,
                 'id_produk' => $item->id_produk,
-                'quantity' => $item->quantity,
-                'harga_satuan' => $item->produk->harga_satuan,
+                'qty' => $item->quantity,
+                'harga_satuan' => $item->harga_satuan,
             ]);
-
-            // Hapus item dari keranjang
-            $item->delete();
         }
 
-        // Redirect ke halaman pesanan atau halaman lain yang diinginkan
-        return redirect()->route('keranjang')->with('success', 'Pesanan berhasil dibuat.');
+        // Hapus semua item dari keranjang
+        DB::table('keranjang')->where('id_user', $userId)->delete();
+
+        // Redirect ke halaman keranjang atau halaman lain yang diinginkan
+        return redirect()->route('keranjang')->with('success', 'Pesanan berhasil dibuat.Lakukan Pembayaran di PESANAN');
     }
 }

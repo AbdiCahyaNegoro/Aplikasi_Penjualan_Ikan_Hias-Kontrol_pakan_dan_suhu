@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id_pesanan');
             $table->unsignedInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users');
+            $table->enum('status',['Belum Bayar','Sudah Melakukan Pembayaran']);        
             $table->date('tanggalpesanan');
             $table->decimal('totalpesanan', 10, 2);    
         });

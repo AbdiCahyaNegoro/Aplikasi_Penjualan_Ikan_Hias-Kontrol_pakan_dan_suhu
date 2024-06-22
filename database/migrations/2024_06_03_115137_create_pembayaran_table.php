@@ -17,6 +17,7 @@ return new class extends Migration
            $table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
             $table->unsignedInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users');
+            $table->enum('status',['Menunggu Konfirmasi','Pembayaran Sukses','Pembayaran Ditolak']);
             $table->date('tanggal_pembayaran');
             $table->string('buktibayar');
             $table->string('folder');

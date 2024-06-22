@@ -228,51 +228,137 @@ button {
 
 .header_section_top {
     width: 100%;
-    background-image: linear-gradient(180deg, #224abe 10%, #36b9cc 100%);
-    clip-path: polygon(0 0, 100% 0, 96% 100%, 2% 100%);
     height: 100px;
+    background-image: linear-gradient(180deg, #224abe 10%, #36b9cc 100%);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-size: cover;
+    background-position: center;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Menggunakan space-between untuk memisahkan elemen di sebelah kiri dan kanan */
-    padding: 0 20px; /* Menambahkan padding agar tidak terlalu dekat dengan tepi */
-    border-bottom-left-radius: 20px; /* Membuat sudut kiri bawah rounded */
-    border-bottom-right-radius: 20px; /* Membuat sudut kanan bawah rounded */
-    overflow: hidden; /* Agar elemen anak tidak keluar dari border-radius */
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
 }
 
+.header_section_top:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.header_logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.header_logo:hover {
+    transform: scale(1.1);
+}
+
+.custom_menu {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Force the menu to the right */
+}
 
 .custom_menu ul {
     margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
-    align-items: center; /* Memastikan semua item menu berada pada posisi vertikal yang sama */
+    align-items: center;
 }
 
 .custom_menu li {
     font-size: 16px;
-    color: #2c2c2c;
-    margin-left: 90px;
-    text-align: center;
+    margin-left: 40px;
+    position: relative;
+}
+
+.custom_menu li:first-child {
+    margin-left: 0;
 }
 
 .custom_menu li a {
-    color: #000000;
-    font-family: Arial, Helvetica, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #fff;
     text-decoration: none;
-    transition: color 0.3s;
-    
+    transition: color 0.3s, transform 0.3s;
 }
 
 .custom_menu li a:hover {
-    color: #ffffff;
+    color: #36b9cc;
+    transform: scale(1.1);
 }
 
+.custom_menu .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;
+    min-width: 200px;
+}
 
-/* header top section end */
+.custom_menu li:hover .dropdown-menu {
+    display: block;
+}
 
+.custom_menu .dropdown-item {
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+}
 
-/* logo section start */
+.custom_menu .dropdown-item:hover {
+    background-color: #36b9cc;
+    color: #fff;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .header_section_top {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 20px;
+    }
+
+    .header_logo {
+        margin-bottom: 10px;
+    }
+
+    .custom_menu {
+        margin-left: 0; /* Reset margin-left */
+        justify-content: center; /* Center the menu */
+    }
+
+    .custom_menu ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .custom_menu li {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .custom_menu li a {
+        padding: 10px;
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+}
 
 .logo_section {
     width: 100%;
@@ -558,8 +644,12 @@ a:hover {
 
 .fashion_section {
     width: 100%;
-    float: left;
-    padding-bottom: 150px;
+    display: flex; /* Use Flexbox for layout */
+    flex-direction: column; /* Arrange items in a column */
+    align-items: center; /* Center items horizontally */
+    padding: 2rem 1rem; /* Dynamic padding */
+    background-color: #f5f5f5; /* Soft background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .fashion_taital {
@@ -1051,3 +1141,49 @@ input.mail_bt::placeholder {
 .error-container a:hover {
     background-color: #0056b3;
 }
+
+
+/* Sidebar container */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f8f9fa;
+    position: absolute;
+    height: 100%; /* Full height */
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Subtle shadow */
+  }
+  
+  /* Sidebar links */
+  .sidebar a {
+    display: block;
+    color: #333;
+    padding: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+  }
+  
+  /* Active/current link */
+  .sidebar a.active {
+    background-image: linear-gradient(180deg, #36b9cc 10%, #224abe 100%);
+    border-radius: 0.25rem; /* Adjusted for consistency */
+    color: #ffffff;
+    font-weight: bold; /* Make active link bold */
+  }
+  
+  /* Links on mouse-over */
+  .sidebar a:hover:not(.active) {
+    background-image: linear-gradient(180deg, #36b9cc 10%, #224abe 100%);
+    color: #fff;
+    border-radius: 0.25rem; /* Match active link border-radius */
+  }
+  
+  /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+  div.content {
+    margin-left: 200px;
+    padding: 1rem 1rem;
+    height: 1000px;
+    background-color: #fff;
+    transition: margin-left 0.3s ease; /* Smooth transition */
+  }
+  

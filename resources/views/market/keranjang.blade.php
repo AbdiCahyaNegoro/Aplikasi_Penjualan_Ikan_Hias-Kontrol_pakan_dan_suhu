@@ -3,9 +3,19 @@
 @section('title', 'Keranjang Belanja')
 
 @section('isimarket')
-    <div class="fashion_section">
+
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@elseif(session('error'))
+<div class="alert alert-error">
+    {{ session('error') }}
+</div>
+@endif
+
+<div class="fashion_section">
         <div class="container">
-            <br><br>
             <h1>KERANJANG BELANJA</h1><br><br>
             @if ($keranjang->isEmpty())
                 <p>Keranjang belanja Anda kosong.</p>
