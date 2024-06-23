@@ -5,20 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\produk;
 use App\Models\jenisproduk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProdukController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-    }
-
-    public function create()
-    {
-    }
-
     public function tampildataproduk()
     {
         // Ambil semua data produk dari database
@@ -28,10 +22,6 @@ class ProdukController extends Controller
         return view('index', compact('produk'));
     }
 
-
-    public function edit(produk $produk)
-    {
-    }
 
     public function detailproduk($idproduk)
     {
@@ -50,16 +40,6 @@ class ProdukController extends Controller
         }
     }
 
-    public function destroy(produk $produk)
-    {
-        //
-    }
-    public function beliProduk()
-    {
-        return view('market.pesan');
-    }
-
-
     public function admintampildataproduk()
     {
         // Ambil semua data produk dari database dengan left join ke tabel jenisproduk
@@ -75,73 +55,80 @@ class ProdukController extends Controller
     }
 
 
-    public function formtambahproduk(){
+    public function formtambahproduk()
+    {
         $jenisproduk = JenisProduk::all();
-        return view('admin.TambahProduk',compact('jenisproduk'));    
+        return view('admin.TambahProduk', compact('jenisproduk'));
     }
 
     public function admintambahproduk(Request $request)
-{
-    // Validasi input
-    $request->validate([
-        'nama_produk' => 'required|string|max:100',
-        'harga_satuan' => 'required|numeric',
-        'stok' => 'required|integer',
-        'jenisproduk_id' => 'required|integer',
-        'deskripsiproduk' => 'required|string',
-        'nama_foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+    {
+        // Validasi input
+        $request->validate([
+            'nama_produk' => 'required|string|max:100',
+            'harga_satuan' => 'required|numeric',
+            'stok' => 'required|integer',
+            'jenisproduk_id' => 'required|integer',
+            'deskripsiproduk' => 'required|string',
+            'nama_foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    // Mendapatkan file yang diupload
-    $file = $request->file('nama_foto');
+        // Mendapatkan file yang diupload
+        $file = $request->file('nama_foto');
 
-    // Simpan file foto dengan nama sesuai nama produk
-    $fotoName = $request->nama_produk . '.' . $file->getClientOriginalExtension();
-    $destinationPath = public_path('assets/img/produk');
+        // Simpan file foto dengan nama sesuai nama produk
+        $fotoName = $request->nama_produk . '.' . $file->getClientOriginalExtension();
+        $destinationPath = public_path('assets/img/produk');
 
-    // Pindahkan file ke direktori tujuan
-    $file->move($destinationPath, $fotoName);
+        // Pindahkan file ke direktori tujuan
+        $file->move($destinationPath, $fotoName);
 
-    // Buat produk baru
-    Produk::create([
-        'nama_produk' => $request->nama_produk,
-        'harga_satuan' => $request->harga_satuan,
-        'stok' => $request->stok,
-        'jenisproduk_id' => $request->jenisproduk_id,
-        'deskripsiproduk' => $request->deskripsiproduk,
-        'nama_foto' => $fotoName,
-        'folder' => 'assets/img/produk',
-    ]);
+        // Buat produk baru
+        Produk::create([
+            'nama_produk' => $request->nama_produk,
+            'harga_satuan' => $request->harga_satuan,
+            'stok' => $request->stok,
+            'jenisproduk_id' => $request->jenisproduk_id,
+            'deskripsiproduk' => $request->deskripsiproduk,
+            'nama_foto' => $fotoName,
+            'folder' => 'assets/img/produk',
+        ]);
 
-    // Redirect dan berikan pesan sukses
-    return redirect()->route('admin.tambahproduk')->with('success', 'Produk berhasil ditambahkan.');
-}
-
-
-    
-    
-
-    public function formjenisproduk(){
-        $jenisproduk = jenisproduk::all();
-        return view('admin.jenisikan', compact('jenisproduk'));    
+        // Redirect dan berikan pesan sukses
+        return redirect()->route('admin.simpanproduk')->with('success', 'Produk berhasil ditambahkan.');
     }
-        
+
+    
+
+
+    public function formjenisproduk(Request $request)
+    {
+        $jenisproduk = jenisproduk::all();
+        return view('admin.jenisikan', compact('jenisproduk'));
+    }
+
     public function admintambahjenis(Request $request)
     {
         // Validasi input
         $request->validate([
-            'jenis_ikan' => 'required|string|max:100',
+            'jenis' => 'required|string|max:100',
         ]);
 
         // Simpan data jenis ikan baru
-        jenisproduk::create([
-            'jenis_ikan' => $request->jenis_ikan,
+        DB::table('jenisproduk')->insert([
+            'jenis' => $request->jenis,
         ]);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('admin.jenisikan')->with('success', 'Jenis ikan berhasil ditambahkan.');
+        return redirect()->route('admin.simpanjenis')->with('success', 'Jenis ikan berhasil ditambahkan.');
     }
-    
 
-   
+    public function hapusJenisProduk($id)
+    {
+        // Hapus jenis produk berdasarkan ID
+        DB::table('jenisproduk')->where('id_jenisproduk', $id)->delete();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.tambahjenis')->with('success', 'Jenis produk berhasil dihapus.');
+    }
 }

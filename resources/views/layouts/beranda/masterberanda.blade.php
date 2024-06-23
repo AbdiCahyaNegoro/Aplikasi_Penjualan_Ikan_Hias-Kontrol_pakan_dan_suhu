@@ -79,12 +79,12 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#produkSubMenu" aria-expanded="true"
+                <a class="nav-link" href="{{ route('tampilproduk') }}" data-toggle="collapse" data-target="#produkSubMenu" aria-expanded="true"
                     aria-controls="produkSubMenu">
                     <i class="fas fa-book" style="font-size: 16px"></i>
                     <span style="font-size: 16px">Produk</span>
                 </a>
-                <div id="produkSubMenu" class="collapse show" aria-labelledby="produkSubMenu" data-parent="#accordionSidebar">
+                <div id="produkSubMenu" class="collapse hide" aria-labelledby="produkSubMenu" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('tampilproduk') }}">Data Produk</a>
                         <a class="collapse-item" href="{{route('admin.tambahproduk')}}">Tambah Produk</a>

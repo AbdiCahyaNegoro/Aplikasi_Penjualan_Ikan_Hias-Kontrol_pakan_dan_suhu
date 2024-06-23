@@ -30,11 +30,8 @@ Route::middleware(CekLeveladmin::class)->group(function () {
     //SUB MENU TAMBAH JENIS PRODUK
     Route::get('/produk/tambahjenisikan', [App\Http\Controllers\ProdukController::class, 'formjenisproduk'])->name('admin.tambahjenis');
     Route::post('/produk/tambahjenisikan', [App\Http\Controllers\ProdukController::class, 'admintambahjenis'])->name('admin.simpanjenis');
-
-    Route::post('/produk', [App\Http\Controllers\ProdukController::class, 'admintambahproduk'])->name('admintambahproduk');
-    Route::post('/produk', [App\Http\Controllers\ProdukController::class, 'tambahJenisIkan'])->name('admintambahjenisikan');
-    
-    
+    Route::delete('/produk/{id}/hapus', [App\Http\Controllers\ProdukController::class, 'hapusJenisProduk'])->name('admin.hapusjenis');
+        
 });
 
 Route::middleware(CekLevelPelanggan::class)->group(function () {

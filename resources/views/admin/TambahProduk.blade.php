@@ -6,6 +6,12 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Tambah Produk</h1>
+            <!-- Notifikasi Sukses -->
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
         </div>
 
         <!-- Content Row -->
@@ -17,6 +23,17 @@
                 <!-- Form Tambah Produk -->
                 <div class="card shadow mb-4">
                     <div class="card-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <!-- Form Tambah Produk -->
                         <form action="{{ route('admin.simpanproduk') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
