@@ -5,8 +5,13 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Produk</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+
+            <!-- Notifikasi Sukses -->
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
         </div>
 
         <div class="row">
@@ -28,25 +33,22 @@
                                         <th>Stok</th>
                                         <th>Jenis Produk</th>
                                         <th>Deskripsi Produk</th>
-                                        <th>Nama Foto</th>
-                                        <th>Folder</th>
-                                        <th>Dibuat Pada</th>
-                                        <th>Diperbarui Pada</th>
+                                        <th>Foto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($produks as $produk)
+                                    @foreach ($produk as $item)
                                         <tr>
-                                            <td>{{ $produk->id_produk }}</td>
-                                            <td>{{ $produk->nama_produk }}</td>
-                                            <td>{{ $produk->harga_satuan }}</td>
-                                            <td>{{ $produk->stok }}</td>
-                                            <td>{{ $produk->jenisproduk_id }}</td>
-                                            <td>{{ $produk->deskripsiproduk }}</td>
-                                            <td>{{ $produk->nama_foto }}</td>
-                                            <td>{{ $produk->folder }}</td>
-                                            <td>{{ $produk->created_at }}</td>
-                                            <td>{{ $produk->updated_at }}</td>
+                                            <td>{{ $item->id_produk }}</td>
+                                            <td>{{ $item->nama_produk }}</td>
+                                            <td>{{ $item->harga_satuan }}</td>
+                                            <td>{{ $item->stok }}</td>
+                                            <td>{{ $item->jenis }}</td>
+                                            <td>{{ $item->deskripsiproduk }}</td>
+                                            <td>
+                                                <img src="{{ asset($item->folder . '/' . $item->nama_foto) }}"
+                                                    alt="{{ $item->nama_produk }}" style="max-width: 100px; height: auto;">
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -56,6 +58,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection

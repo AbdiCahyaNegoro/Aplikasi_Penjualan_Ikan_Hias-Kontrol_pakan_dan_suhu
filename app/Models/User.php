@@ -50,4 +50,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    public function updateUserProfile(array $data)
+    {
+        return $this->update($data);
+    }
 }

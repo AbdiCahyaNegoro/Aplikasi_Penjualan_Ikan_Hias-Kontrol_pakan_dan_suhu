@@ -17,7 +17,7 @@ class produk extends Model
         'stok',
         'jenisproduk_id',
         'deskripsiproduk',
-        'foto',
+        'nama_foto',
         'folder',
     ];
 }

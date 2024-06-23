@@ -7,6 +7,8 @@ use App\Models\Pesanan;
 use App\Models\produk;
 use App\Models\Keranjang;
 use App\Models\Pembayaran;
+use App\Models\Pengiriman;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PesananController extends Controller
@@ -20,16 +22,20 @@ class PesananController extends Controller
 
     public function pesananbelumbayar()
     {
+        $userId = Auth::user()->id; // Mendapatkan user_id dari pengguna yang sedang masuk
+
         $pesanan = DB::table('pesanan')
             ->leftJoin('pembayaran', 'pesanan.id_pesanan', '=', 'pembayaran.id_pesanan')
             ->leftJoin('pengiriman', 'pesanan.id_pesanan', '=', 'pengiriman.id_pesanan')
             ->select('pesanan.*', 'pembayaran.status as pembayaran_status', 'pengiriman.status as pengiriman_status')
             ->where('pesanan.status', '=', 'Belum Bayar')  // Menyaring pesanan dengan status "Belum Bayar"
+            ->where('pesanan.id_user', '=', $userId)  // Menyaring pesanan sesuai dengan user yang masuk
             ->get();
 
         $detailPesanan = DB::table('detailpesanan')
             ->leftJoin('produk', 'detailpesanan.id_produk', '=', 'produk.id_produk')
             ->select('detailpesanan.*', 'produk.nama_produk', 'produk.harga_satuan', 'produk.folder', 'produk.nama_foto')
+            ->whereIn('detailpesanan.id_pesanan', $pesanan->pluck('id_pesanan'))
             ->get();
 
         return view('market.pesananbelumbayar', compact('pesanan', 'detailPesanan'));
@@ -40,22 +46,34 @@ class PesananController extends Controller
     {
         // Mengambil data pesanan berdasarkan id_pesanan yang diberikan
         $pesanan = DB::table('pesanan')->where('id_pesanan', $idpesanan)->first();
-    
+
         // Memeriksa apakah pesanan ditemukan
         if ($pesanan) {
             // Memvalidasi input dari request
-            $validated = $request->validate([
+            $request->validate([
                 'buktibayar' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-    
-            // Menangani upload file bukti bayar
-            if ($request->hasFile('buktibayar')) {
-                $file = $request->file('buktibayar');
-                $folderPath = 'public/assets/img/pembayaran';
-                $fileName = $file->getClientOriginalName();
-                $filePath = $file->storeAs($folderPath, $fileName, 'public');
+
+            // Mendapatkan file yang diupload
+            $file = $request->file('buktibayar');
+
+            // Simpan file foto dengan nama sesuai nama produk
+            $fileName = $file->getClientOriginalName();
+            $destinationPath = public_path('assets/img/pembayaran');
+
+            // Cek apakah direktori tujuan ada
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true); // Buat direktori jika tidak ada
             }
-    
+
+            // Pindahkan file ke direktori tujuan
+            $file->move($destinationPath, $fileName);
+
+            // Cek apakah file berhasil dipindahkan
+            if (!file_exists($destinationPath . '/' . $fileName)) {
+                return redirect()->route('tampilpesananbelumbayar')->with('error', 'Gagal mengunggah bukti pembayaran. Silakan coba lagi.');
+            }
+
             // Menyimpan data pembayaran ke tabel pembayaran
             DB::table('pembayaran')->insert([
                 'id_pesanan' => $idpesanan,
@@ -63,14 +81,14 @@ class PesananController extends Controller
                 'status' => 'Menunggu Konfirmasi', // Status awal pembayaran
                 'tanggal_pembayaran' => now(),
                 'buktibayar' => $fileName,
-                'folder' => $folderPath,
+                'folder' => 'assets/img/pembayaran/',
             ]);
-    
+
             // Mengupdate status pesanan menjadi "Sudah Melakukan Pembayaran"
             DB::table('pesanan')->where('id_pesanan', $idpesanan)->update([
                 'status' => 'Sudah Melakukan Pembayaran',
             ]);
-    
+
             // Mengarahkan kembali atau memberikan respons
             return redirect()->route('tampilpesananbelumbayar')->with('success', 'Pesanan berhasil dibayar. Menunggu konfirmasi.');
         } else {
@@ -78,32 +96,59 @@ class PesananController extends Controller
             return redirect()->route('tampilpesananbelumbayar')->with('error', 'Pesanan tidak ditemukan.');
         }
     }
-        
+
+    public function batalkanPesanan($idpesanan)
+    {
+        DB::table('pesanan')
+            ->where('id_pesanan', $idpesanan)
+            ->update(['status' => 'Dibatalkan']);
+
+        return redirect()->route('tampilpesananbelumbayar')->with('success', 'Pesanan berhasil dibatalkan.');
+    }
 
 
 
     public function sudahbayar()
     {
+        $userId = Auth::user()->id; // Mendapatkan user_id dari pengguna yang sedang masuk
+
+        // Ambil semua data pembayaran oleh pengguna yang sedang masuk
+        $pembayaran = DB::table('pembayaran')
+            ->where('id_user', $userId)
+            ->get();
+
+        // Ambil detail pesanan yang terkait dengan pesanan tersebut
         $detailPesanan = DB::table('detailpesanan')
-        ->leftJoin('produk', 'detailpesanan.id_produk', '=', 'produk.id_produk')
-        ->select('detailpesanan.*', 'produk.nama_produk', 'produk.harga_satuan', 'produk.folder', 'produk.nama_foto')
-        ->get();
+            ->leftJoin('produk', 'detailpesanan.id_produk', '=', 'produk.id_produk')
+            ->select('detailpesanan.*', 'produk.nama_produk', 'produk.harga_satuan', 'produk.folder', 'produk.nama_foto')
+            ->whereIn('detailpesanan.id_pesanan', $pembayaran->pluck('id_pesanan'))
+            ->get();
 
-        $pembayaran = Pembayaran::all(); // Ambil semua data pembayaran
-
-        return view('market.pesanansudahbayar', compact('pembayaran','detailPesanan'));
+        return view('market.pesanansudahbayar', compact('pembayaran', 'detailPesanan'));
     }
-
 
     public function dikirim()
     {
+        $userId = Auth::user()->id; // Mendapatkan user_id dari pengguna yang sedang masuk
 
-        return view('market.pesanandikirim');
+        $pengiriman = DB::table('pengiriman')
+            ->join('pesanan', 'pengiriman.id_pesanan', '=', 'pesanan.id_pesanan')
+            ->where('pesanan.id_user', $userId)
+            ->get();
+
+        return view('market.pesanandikirim', compact('pengiriman'));
     }
 
     public function dibatalkan()
     {
+        $userId = Auth::user()->id; // Mendapatkan user_id dari pengguna yang sedang masuk
 
-        return view('market.pesanandibatalkan');
+        $dibatalkan = DB::table('pesanan')
+            ->join('users', 'pesanan.id_user', '=', 'users.id')
+            ->where('pesanan.status', 'Dibatalkan')
+            ->where('pesanan.id_user', $userId)
+            ->get();
+
+        return view('market.pesanandibatalkan', compact('dibatalkan'));
     }
 }

@@ -7,7 +7,7 @@
         <div class="container">
             <!-- The sidebar -->
             <div class="sidebar">
-                <a href="{{route('tampildatapesananbelumbayar')}}">Belum Bayar</a>
+                <a href="{{route('tampilpesananbelumbayar')}}">Belum Bayar</a>
                 <a href="{{route('tampildatasudahbayar')}}">Sudah Bayar</a>
                 <a class="active" href="{{route('tampildatadikirim')}}">Dikirim</a>
                 <a href="{{route('tampildatadibatalkan')}}">Dibatalkan</a>

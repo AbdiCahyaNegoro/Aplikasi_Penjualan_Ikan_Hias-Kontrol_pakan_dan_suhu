@@ -8,6 +8,7 @@ use App\Models\Keranjang;
 use App\Models\DetailPesanan;
 use App\Models\Pesanan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class KeranjangController extends Controller
 {
@@ -31,7 +32,7 @@ class KeranjangController extends Controller
         ]);
 
         // Dapatkan ID pengguna yang saat ini masuk
-        $userId = auth()->id();
+        $userId = Auth::user()->id;
 
         // Dapatkan ID produk dari request
         $productId = $request->input('id_produk');
@@ -74,7 +75,7 @@ class KeranjangController extends Controller
         // Validasi request di sini jika diperlukan
 
         // Dapatkan ID pengguna yang saat ini masuk
-        $userId = auth()->id();
+        $userId = Auth::user()->id;
 
         // Dapatkan produk berdasarkan ID
         $produk = Produk::find($id_produk);
@@ -159,7 +160,7 @@ class KeranjangController extends Controller
     public function keranjangkepesanan(Request $request)
     {
         // Dapatkan ID pengguna yang saat ini masuk
-        $userId = auth()->id();
+        $userId = Auth::user()->id;
 
         // Ambil semua item di keranjang pengguna
         $keranjangItems = DB::table('keranjang')

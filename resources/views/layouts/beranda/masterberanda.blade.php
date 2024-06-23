@@ -33,7 +33,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('beranda') }}">
                 <div class="sidebar-brand-icon">
-                    <img src="assets/img/logobrand.png" alt="logobrand" width="200px">
+                    <img src="{{asset('assets/img/logobrand.png')}}" alt="logobrand" width="200px">
                 </div>
             </a>
 
@@ -72,16 +72,25 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link"  href="{{ route('pelanggan') }}">
+                <a class="nav-link"  href="{{ route('tampilpelanggan') }}">
                     <i class="fa fa-users" style="font-size: 16px"></i>
                     <span style="font-size: 16px">Data Pelanggan</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#produkSubMenu" aria-expanded="true"
+                    aria-controls="produkSubMenu">
                     <i class="fas fa-book" style="font-size: 16px"></i>
-                    <span style="font-size: 16px">Data Produk</span></a>
+                    <span style="font-size: 16px">Produk</span>
+                </a>
+                <div id="produkSubMenu" class="collapse show" aria-labelledby="produkSubMenu" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('tampilproduk') }}">Data Produk</a>
+                        <a class="collapse-item" href="{{route('admin.tambahproduk')}}">Tambah Produk</a>
+                        <a class="collapse-item" href="{{route('admin.tambahjenis')}}">Tambah Jenis Ikan</a>
+                    </div>
+                </div>
             </li>
 
             <li class="nav-item">
@@ -163,7 +172,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
                                     class="mr-2 d-none d-lg-inline text-gray-600 small">{{ strtoupper(Auth::user()->name) }}</span>
-                                <img class="img-profile rounded-circle" src="{{ Auth::user()->folder }}">
+                                <img class="img-profile rounded-circle" src="{{ asset(Auth::user()->folder) }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

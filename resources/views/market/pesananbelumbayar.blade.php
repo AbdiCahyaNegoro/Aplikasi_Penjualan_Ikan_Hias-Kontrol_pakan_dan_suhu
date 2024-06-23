@@ -46,6 +46,10 @@
                                             data-toggle="modal" data-target="#bayarpesanan{{ $order->id_pesanan }}">
                                             Bayar
                                         </button>
+                                        <form action="{{ route('batalkanpesanan', $order->id_pesanan) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Batalkan</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

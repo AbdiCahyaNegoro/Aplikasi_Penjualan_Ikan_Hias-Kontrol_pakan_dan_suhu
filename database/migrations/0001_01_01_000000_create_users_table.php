@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('alamat',255);
             $table->date('tanggallahir');
             $table->enum('jeniskelamin',['L','P']);
-            $table->string('foto',50);
-            $table->string('folder',50);
+            $table->string('foto',50); // ini nama foto
+            $table->string('folder',50); // untuk menyimpan path folder foto nya
             $table->rememberToken();
             $table->timestamps();
         });
