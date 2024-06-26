@@ -94,21 +94,31 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="{{route('tampilpesanan')}}" data-toggle="collapse" data-target="#pesanan" aria-expanded="true"
+                aria-controls="pesananSubMenu">
                     <i class="fas fa-list-alt" style="font-size: 16px"></i>
                     <span style="font-size: 16px">Pesanan</span></a>
+                    <div id="pesanan" class="collapse hide" aria-labelledby="pesanan" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('tampilpesanan') }}">Konfirmasi Pesanan</a>
+                            <a class="collapse-item" href="{{ route('pesananditolak') }}">Pesanan Ditolak</a>
+                            </div>
+
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-credit-card" style="font-size: 16px"></i>
-                    <span style="font-size: 16px">Pembayaran</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="{{ route('admin.belumkirim') }}" data-toggle="collapse" data-target="#pengiriman" aria-expanded="true"
+                    aria-controls="produkSubMenu">
                     <i class="fas fa-paper-plane" style="font-size: 16px"></i>
-                    <span style="font-size: 16px">Pengiriman</span></a>
+                    <span style="font-size: 16px">Pengiriman</span>
+                </a>
+                    <div id="pengiriman" class="collapse hide" aria-labelledby="pengiriman" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('admin.belumkirim') }}">Belum Dikirim</a>
+                            <a class="collapse-item" href="{{route('admin.sudahkirim')}}">Sudah Dikirim</a>
+                            <a class="collapse-item" href="">Diterima</a>
+                        </div>
+    
             </li>
 
             <!-- Divider -->

@@ -98,8 +98,98 @@ class ProdukController extends Controller
         return redirect()->route('admin.simpanproduk')->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    
+    public function adminubahProduk(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'harga_satuan' => 'required|numeric',
+            'stok' => 'required|integer',
+            'jenisproduk_id' => 'required|exists:jenisproduk,id_jenisproduk',
+            'deskripsiproduk' => 'required|string',
+            'nama_foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Contoh validasi untuk file foto
+        ]);
 
+        // Cari produk berdasarkan ID
+        $produk = Produk::find($id);
+
+        // Update data produk
+        $produk->nama_produk = $request->nama_produk;
+        $produk->harga_satuan = $request->harga_satuan;
+        $produk->stok = $request->stok;
+        $produk->jenisproduk_id = $request->jenisproduk_id;
+        $produk->deskripsiproduk = $request->deskripsiproduk;
+
+        // Cek apakah ada file foto baru yang diunggah
+        if ($request->hasFile('nama_foto')) {
+            // Proses file foto baru
+            $file = $request->file('nama_foto');
+            $fileName = $file->getClientOriginalName();
+            $destinationPath = public_path('assets/img/produk');
+            $file->move($destinationPath, $fileName);
+
+            // Update nama file foto dalam database
+            $produk->nama_foto = $fileName;
+        }
+
+        // Simpan perubahan
+        $produk->save();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.tambahproduk')->with('success', 'Produk berhasil diubah.');
+    }
+
+
+    public function adminsimpanubahProduk(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'harga_satuan' => 'required|numeric',
+            'stok' => 'required|integer',
+            'nama_foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi file foto
+        ]);
+
+        // Mulai transaksi database
+        DB::beginTransaction();
+
+            // Ambil data produk berdasarkan ID
+            $produk = DB::table('produk')->where('id_produk', $id)->first();
+
+            // Update data produk
+            DB::table('produk')->where('id_produk', $id)->update([
+                'nama_produk' => $request->nama_produk,
+                'harga_satuan' => $request->harga_satuan,
+                'stok' => $request->stok,
+                'deskripsiproduk' => $request->deskripsiproduk,
+            ]);
+
+            // Cek apakah ada file foto baru yang diunggah
+            if ($request->hasFile('nama_foto')) {
+                // Proses file foto baru
+                $file = $request->file('nama_foto');
+                $fileName = $file->getClientOriginalName();
+                $destinationPath = public_path('assets/img/produk');
+                $file->move($destinationPath, $fileName);
+
+                // Hapus foto lama jika ada
+                $oldPhotoPath = $produk->folder . '/' . $produk->nama_foto;
+                if (file_exists($oldPhotoPath)) {
+                    unlink($oldPhotoPath);
+                }
+
+                // Update nama file foto dalam database
+                DB::table('produk')->where('id_produk', $id)->update([
+                    'nama_foto' => $fileName,
+                ]);
+            }
+
+            // Commit transaksi jika berhasil
+            DB::commit();
+
+            // Redirect dengan pesan sukses
+            return redirect()->route('tampilproduk')->with('success', 'Produk berhasil diupdate.');
+    }
 
     public function formjenisproduk(Request $request)
     {

@@ -24,6 +24,7 @@ class User extends Authenticatable
         'alamat',
         'tanggallahir',
         'jeniskelamin',
+        'no_hp',
         'foto',
         'folder',
     ];

@@ -53,7 +53,7 @@
                                         alt="{{ $item->nama_produk }}">
                                 </div><br>
                                 <p class="price_text">Harga <span style="color: #262626;">Rp.
-                                        {{ number_format($item->harga_satuan, 0, ',', '.') }}</span></p><br>
+                                        {{ number_format($item->harga_satuan, 0, ',', '.') }}     |   Stok {{($item->stok) }} </span></p><br>
                                 <div class="btn_main">
                                     @auth
                                         <div class="buy_bt"><a

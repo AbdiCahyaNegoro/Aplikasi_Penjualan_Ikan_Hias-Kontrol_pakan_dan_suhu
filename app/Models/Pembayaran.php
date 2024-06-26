@@ -20,4 +20,5 @@ class Pembayaran extends Model
         'buktibayar',
         'folder',
     ];
+    public $timestamps = false;
 }

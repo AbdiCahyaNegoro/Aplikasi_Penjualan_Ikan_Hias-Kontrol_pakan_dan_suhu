@@ -67,7 +67,6 @@ class HomeController extends Controller
 
     public function Profile()
     {
-        // Logic untuk halaman beranda admin
         return view('Profile');
     }
 

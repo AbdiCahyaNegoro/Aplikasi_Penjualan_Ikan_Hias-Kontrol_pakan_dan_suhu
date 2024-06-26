@@ -24,13 +24,29 @@ Route::middleware(CekLeveladmin::class)->group(function () {
   
     //PRODUK ALL
     Route::get('/produk', [App\Http\Controllers\ProdukController::class, 'admintampildataproduk'])->name('tampilproduk');
+    Route::put('/produk/{id}/ubah', [App\Http\Controllers\ProdukController::class, 'adminsimpanubahProduk'])->name('admin.ubahproduk');
+    Route::post('/produk/{id}/ubah', [App\Http\Controllers\ProdukController::class, 'adminsimpanubahProduk'])->name('admin.simpanubahproduk');
     //SUB MENU TAMBAH PRODUK
     Route::get('/produk/tambahproduk', [App\Http\Controllers\ProdukController::class, 'formtambahproduk'])->name('admin.tambahproduk');
-    Route::post('/produk/tambahproduk', [App\Http\Controllers\ProdukController::class, 'admintambahproduk'])->name('admin.simpanproduk');
+    Route::post('/produk/tambahproduk', [App\Http\Controllers\ProdukController::class, 'admintambahproduk'])->name('admin.simpanproduk');    
     //SUB MENU TAMBAH JENIS PRODUK
     Route::get('/produk/tambahjenisikan', [App\Http\Controllers\ProdukController::class, 'formjenisproduk'])->name('admin.tambahjenis');
     Route::post('/produk/tambahjenisikan', [App\Http\Controllers\ProdukController::class, 'admintambahjenis'])->name('admin.simpanjenis');
     Route::delete('/produk/{id}/hapus', [App\Http\Controllers\ProdukController::class, 'hapusJenisProduk'])->name('admin.hapusjenis');
+
+    //PESANAN ALL
+    Route::get('/adminpesanan', [App\Http\Controllers\PesananController::class, 'admintampilpesanan'])->name('tampilpesanan');
+    Route::get('/adminpesananditolak', [App\Http\Controllers\PesananController::class, 'admintampilpesananditolak'])->name('pesananditolak');
+    Route::post('/adminpesanan/{id}/konfirmasi', [App\Http\Controllers\PesananController::class, 'adminkonfirmasiPembayaran'])->name('konfirmasi.pembayaran');
+    Route::post('/adminpesanan/{id}/reject', [App\Http\Controllers\PesananController::class, 'adminrejectPembayaran'])->name('reject.pembayaran');
+
+    //PENGIRIMAN
+    Route::get('/belumkirim', [App\Http\Controllers\PengirimanController::class, 'belumkirim'])->name('admin.belumkirim');
+    Route::get('/formkirim/{id}', [App\Http\Controllers\PengirimanController::class, 'kirimForm'])->name('admin.kirimForm');
+    Route::post('/kirim/{id}', [App\Http\Controllers\PengirimanController::class, 'kirim'])->name('admin.kirimpesanan');
+    Route::get('/sudahkirim', [App\Http\Controllers\PengirimanController::class, 'adminsudahkirim'])->name('admin.sudahkirim');
+
+
         
 });
 

@@ -45,52 +45,54 @@
                                         </button>
                                     </td>
                                 </tr>
+                            @endforeach
                         </tbody>
                     </table>
             </div>
         </div>
     </div>
 
-    <!-- Modal Detail Pesanan -->
-    <div class="modal fade" id="detailPesanan{{ $bayar->id_pembayaran }}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Pesanan {{ $bayar->id_pembayaran }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Foto</th>
-                                <th>Nama Produk</th>
-                                <th>Quantity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($detailPesanan->where('id_pesanan', $bayar->id_pesanan) as $detail)
+    @foreach ($pembayaran as $bayar)
+        <!-- Modal Detail Pesanan -->
+        <div class="modal fade" id="detailPesanan{{ $bayar->id_pembayaran }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Detail Pesanan {{ $bayar->id_pembayaran }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td><img src="{{ asset($detail->folder . '/' . $detail->nama_foto) }}" width="100px"
-                                            alt="{{ $detail->nama_produk }}"></td>
-                                    <td>{{ $detail->nama_produk }}</td>
-                                    <td>{{ $detail->qty }}</td>
+                                    <th>No</th>
+                                    <th>Foto</th>
+                                    <th>Nama Produk</th>
+                                    <th>Quantity</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            </thead>
+                            <tbody>
+                                @foreach ($detailPesanan->where('id_pesanan', $bayar->id_pesanan) as $detail)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td><img src="{{ asset($detail->folder . '/' . $detail->nama_foto) }}" width="100px"
+                                                alt="{{ $detail->nama_produk }}"></td>
+                                        <td>{{ $detail->nama_produk }}</td>
+                                        <td>{{ $detail->qty }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endforeach
     @endif
 @endsection

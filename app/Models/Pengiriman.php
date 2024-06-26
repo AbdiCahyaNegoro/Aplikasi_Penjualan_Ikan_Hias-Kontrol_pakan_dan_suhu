@@ -17,7 +17,8 @@ class Pengiriman extends Model
         'id_pesanan',
         'tanggal_pengiriman',
         'status',
-        'foto_resi',
+        'nama_foto_resi',
         'folder',
     ];
+    public $timestamps = false;
 }

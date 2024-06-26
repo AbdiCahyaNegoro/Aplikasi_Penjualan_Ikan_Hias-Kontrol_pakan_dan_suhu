@@ -115,6 +115,7 @@ class PesananController extends Controller
         // Ambil semua data pembayaran oleh pengguna yang sedang masuk
         $pembayaran = DB::table('pembayaran')
             ->where('id_user', $userId)
+            ->orderBy('tanggal_pembayaran', 'desc') // Mengurutkan berdasarkan tanggal pembayaran dari terbaru ke terlama
             ->get();
 
         // Ambil detail pesanan yang terkait dengan pesanan tersebut
@@ -126,6 +127,8 @@ class PesananController extends Controller
 
         return view('market.pesanansudahbayar', compact('pembayaran', 'detailPesanan'));
     }
+
+
 
     public function dikirim()
     {
@@ -150,5 +153,72 @@ class PesananController extends Controller
             ->get();
 
         return view('market.pesanandibatalkan', compact('dibatalkan'));
+    }
+
+    public function admintampilpesanan()
+    {
+        $pembayaranMenungguKonfirmasi = DB::table('pembayaran')
+            ->select('pembayaran.*', 'users.name as user_name')
+            ->leftJoin('users', 'pembayaran.id_user', '=', 'users.id')
+            ->leftJoin('pesanan', 'pembayaran.id_pesanan', '=', 'pesanan.id_pesanan')
+            ->where('pembayaran.status', 'Menunggu Konfirmasi')
+            ->distinct() // Menggunakan DISTINCT untuk menghilangkan baris ganda
+            ->get();
+
+
+        $detailPesanan = DB::table('detailpesanan')
+            ->select('detailpesanan.*', 'produk.nama_produk', 'produk.harga_satuan')
+            ->leftJoin('produk', 'detailpesanan.id_produk', '=', 'produk.id_produk')
+            ->distinct() // Menggunakan DISTINCT untuk menghilangkan baris ganda
+            ->get();
+
+        return view('admin.Pesanan', compact('pembayaranMenungguKonfirmasi', 'detailPesanan'));
+    }
+
+
+    public function admintampilpesananditolak()
+    {
+        $pembayaranMenungguKonfirmasi = DB::table('pembayaran')
+            ->select('pembayaran.*', 'users.name as user_name')
+            ->leftJoin('users', 'pembayaran.id_user', '=', 'users.id')
+            ->leftJoin('pesanan', 'pembayaran.id_pesanan', '=', 'pesanan.id_pesanan')
+            ->where('pembayaran.status', 'Pembayaran Ditolak')
+            ->distinct() // Menggunakan DISTINCT untuk menghilangkan baris ganda
+            ->get();
+
+        return view('admin.PesananDitolak', compact('pembayaranMenungguKonfirmasi'));
+    }
+
+
+    public function adminkonfirmasiPembayaran(Request $request, $id)
+    {
+        // Update status pembayaran
+        $pembayaran = Pembayaran::findOrFail($id);
+        $pembayaran->status = 'Pembayaran Sukses';
+        $pembayaran->save();
+    
+        // Simpan data pengiriman
+        $pengirimanData = [
+            'id_pesanan' => $pembayaran->id_pesanan,
+            'tanggal_pengiriman' => now(), 
+            'status' => 'Belum Dikirim',
+            'nama_foto_resi' => "", 
+            'folder' => 'assets/img/resi',
+        ];
+    
+        Pengiriman::create($pengirimanData);
+    
+        return redirect()->back()->with('success', 'Pembayaran Diterima.');
+    }
+
+
+    public function adminrejectPembayaran(Request $request, $id)
+    {
+        // Update status pesanan menjadi Pembayaran Ditolak
+        DB::table('pembayaran')->where('id_pembayaran', $id)->update([
+            'status' => 'Pembayaran Ditolak',
+        ]);
+
+        return redirect()->back()->with('success', 'Pembayaran Ditolak.');
     }
 }

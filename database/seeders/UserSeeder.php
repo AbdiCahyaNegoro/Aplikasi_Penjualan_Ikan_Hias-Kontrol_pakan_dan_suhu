@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
         $user->alamat = "Cikembar";
         $user->tanggallahir = "1994-12-08";
         $user->jeniskelamin = "L";
+        $user->no_hp = "081212121212";
         $user->foto = "default.jpg";
         $user->folder = 'assets/img/user/default.jpg';
         $user->save();
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
         $user->alamat = "Cikembar";
         $user->tanggallahir = "1994-12-08";
         $user->jeniskelamin = "L";
+        $user->no_hp = "081212121212";
         $user->foto = "default.jpg";
         $user->folder = 'assets/img/user/default.jpg';
         $user->save();
