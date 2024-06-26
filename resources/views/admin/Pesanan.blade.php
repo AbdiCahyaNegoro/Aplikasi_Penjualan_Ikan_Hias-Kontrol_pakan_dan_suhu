@@ -142,7 +142,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- Isi bukti bayar -->
-                        <td><img src="{{ asset($pembayaran->folder . '/' . $pembayaran->buktibayar) }}" width="100px"
+                        <td><img src="{{ asset($pembayaran->folder . '/' . $pembayaran->buktibayar) }}" width="250px"
                                 alt="{{ $pembayaran->buktibayar }}"></td>
 
                     </div>

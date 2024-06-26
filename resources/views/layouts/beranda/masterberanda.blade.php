@@ -11,14 +11,14 @@
     <title>::FishFantasy::Admin</title>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Custom styles for this template-->
-    <link rel="stylesheet" type="text/css" href={{asset('assets/css/sb-admin-2.min.css')}} rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href={{ asset('assets/css/sb-admin-2.min.css') }} rel="stylesheet">
 
 </head>
 
@@ -33,7 +33,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('beranda') }}">
                 <div class="sidebar-brand-icon">
-                    <img src="{{asset('assets/img/logobrand.png')}}" alt="logobrand" width="200px">
+                    <img src="{{ asset('assets/img/logobrand.png') }}" alt="logobrand" width="200px">
                 </div>
             </a>
 
@@ -63,6 +63,14 @@
                 </a>
             </li>
 
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('suhuair') }}">
+                    <i class="fa fa-thermometer-empty" style="font-size: 16px"></i>
+                    <span style="font-size: 16px">Suhu Air</span>
+                </a>
+            </li>
+            
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -72,53 +80,55 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link"  href="{{ route('tampilpelanggan') }}">
+                <a class="nav-link" href="{{ route('tampilpelanggan') }}">
                     <i class="fa fa-users" style="font-size: 16px"></i>
                     <span style="font-size: 16px">Data Pelanggan</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('tampilproduk') }}" data-toggle="collapse" data-target="#produkSubMenu" aria-expanded="true"
-                    aria-controls="produkSubMenu">
+                <a class="nav-link" href="{{ route('tampilproduk') }}" data-toggle="collapse"
+                    data-target="#produkSubMenu" aria-expanded="true" aria-controls="produkSubMenu">
                     <i class="fas fa-book" style="font-size: 16px"></i>
                     <span style="font-size: 16px">Produk</span>
                 </a>
-                <div id="produkSubMenu" class="collapse hide" aria-labelledby="produkSubMenu" data-parent="#accordionSidebar">
+                <div id="produkSubMenu" class="collapse hide" aria-labelledby="produkSubMenu"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('tampilproduk') }}">Data Produk</a>
-                        <a class="collapse-item" href="{{route('admin.tambahproduk')}}">Tambah Produk</a>
-                        <a class="collapse-item" href="{{route('admin.tambahjenis')}}">Tambah Jenis Ikan</a>
+                        <a class="collapse-item" href="{{ route('admin.tambahproduk') }}">Tambah Produk</a>
+                        <a class="collapse-item" href="{{ route('admin.tambahjenis') }}">Tambah Jenis Ikan</a>
                     </div>
                 </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{route('tampilpesanan')}}" data-toggle="collapse" data-target="#pesanan" aria-expanded="true"
-                aria-controls="pesananSubMenu">
+                <a class="nav-link" href="{{ route('tampilpesanan') }}" data-toggle="collapse" data-target="#pesanan"
+                    aria-expanded="true" aria-controls="pesananSubMenu">
                     <i class="fas fa-list-alt" style="font-size: 16px"></i>
                     <span style="font-size: 16px">Pesanan</span></a>
-                    <div id="pesanan" class="collapse hide" aria-labelledby="pesanan" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="{{ route('tampilpesanan') }}">Konfirmasi Pesanan</a>
-                            <a class="collapse-item" href="{{ route('pesananditolak') }}">Pesanan Ditolak</a>
-                            </div>
+                <div id="pesanan" class="collapse hide" aria-labelledby="pesanan" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('tampilpesanan') }}">Konfirmasi Pesanan</a>
+                        <a class="collapse-item" href="{{ route('pesananditolak') }}">Pesanan Ditolak</a>
+                    </div>
 
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.belumkirim') }}" data-toggle="collapse" data-target="#pengiriman" aria-expanded="true"
-                    aria-controls="produkSubMenu">
+                <a class="nav-link" href="{{ route('admin.belumkirim') }}" data-toggle="collapse"
+                    data-target="#pengiriman" aria-expanded="true" aria-controls="produkSubMenu">
                     <i class="fas fa-paper-plane" style="font-size: 16px"></i>
                     <span style="font-size: 16px">Pengiriman</span>
                 </a>
-                    <div id="pengiriman" class="collapse hide" aria-labelledby="pengiriman" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="{{ route('admin.belumkirim') }}">Belum Dikirim</a>
-                            <a class="collapse-item" href="{{route('admin.sudahkirim')}}">Sudah Dikirim</a>
-                            <a class="collapse-item" href="">Diterima</a>
-                        </div>
-    
+                <div id="pengiriman" class="collapse hide" aria-labelledby="pengiriman"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('admin.belumkirim') }}">Belum Dikirim</a>
+                        <a class="collapse-item" href="{{ route('admin.sudahkirim') }}">Sudah Dikirim</a>
+                        <a class="collapse-item" href="{{ route('admin.sudahditerima') }}">Diterima</a>
+                    </div>
+
             </li>
 
             <!-- Divider -->

@@ -20,7 +20,7 @@
                 <!-- Informasi Pemesan -->
                 <div class="mb-4" id="print-section">
                     <img src="{{ asset('assets/img/logobrand.png') }}" alt="logobrand" style="max-width: 100px;">
-                    <h5 class="font-weight-bold">Informasi Pemesan</h5>
+                    <h5 class="font-weight-bold">Informasi Pemesan | Id Pesanan : {{$pengiriman->id_pesanan}}</h5> 
                     <table class="table table-bordered">
                         <tbody>
                             <tr>

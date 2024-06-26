@@ -1,4 +1,4 @@
-@extends('layouts.admin.masterberanda')
+@extends('layouts.beranda.masterberanda')
 
 @section('title', 'Pengiriman Diterima')
 
@@ -19,7 +19,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Pengiriman</th>
-                                <th>Nama Pelanggan</th>
+                                <th>Id Pesanan</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -28,7 +28,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $kirim->tanggal_pengiriman }}</td>
-                                    <td>{{ $kirim->user_name }}</td>
+                                    <td>{{ $kirim->id_pesanan }}</td>
                                     <td>{{ $kirim->status }}</td>
                                 </tr>
                             @endforeach

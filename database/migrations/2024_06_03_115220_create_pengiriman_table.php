@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('id_pesanan');
             $table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
             $table->date('tanggal_pengiriman');
-            $table->enum('status',['Belum Dikirim','Dikirim']);
+            $table->enum('status',['Belum Dikirim','Dikirim','Diterima']);
             $table->string('nama_foto_resi');
             $table->string('folder',50);
         });

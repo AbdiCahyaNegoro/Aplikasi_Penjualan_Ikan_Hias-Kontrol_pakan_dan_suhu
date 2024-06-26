@@ -19,6 +19,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Pengiriman</th>
+                                <th>ID Pesanan</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -28,6 +29,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $kirim->tanggal_pengiriman }}</td>
+                                    <td>{{ $kirim->id_pesanan }}</td>
                                     <td>{{ $kirim->status }}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"

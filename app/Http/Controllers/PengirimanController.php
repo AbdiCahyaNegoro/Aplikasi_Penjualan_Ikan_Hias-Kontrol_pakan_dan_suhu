@@ -91,11 +91,21 @@ class PengirimanController extends Controller
 
     public function adminsudahkirim()
     {
-        $pengiriman = Pengiriman::where('status', 'Dikirim')
-            ->get();
+        // Ambil semua pengiriman dengan status 'Dikirim'
+        $pengirimanList = Pengiriman::where('status', 'Dikirim')->get();
 
-        return view('admin.Dikirim', compact('pengiriman'));
+        // Ambil data pesanan terkait dan detail pesanan dalam view
+        $pengirimanList->each(function ($pengiriman) {
+            $pengiriman->pesanan = Pesanan::findOrFail($pengiriman->id_pesanan);
+            $pengiriman->detailPesanan = DetailPesanan::select('detailpesanan.*', 'produk.nama_produk', 'produk.harga_satuan')
+                ->leftJoin('produk', 'detailpesanan.id_produk', '=', 'produk.id_produk')
+                ->where('detailpesanan.id_pesanan', $pengiriman->id_pesanan)
+                ->get();
+        });
+
+        return view('admin.dikirim', compact('pengirimanList'));
     }
+
 
     public function adminditerima()
     {
@@ -103,5 +113,42 @@ class PengirimanController extends Controller
             ->get();
 
         return view('admin.Diterima', compact('pengiriman'));
+    }
+
+    public function Dikirim()
+    {
+        // Ambil semua pengiriman dengan status 'Dikirim' atau 'Diterima' untuk pelanggan yang sedang login
+        $pengirimanList = Pengiriman::select('pengiriman.*', 'pesanan.id_user')
+            ->join('pesanan', 'pengiriman.id_pesanan', '=', 'pesanan.id_pesanan')
+            ->where(function ($query) {
+                $query->where('pengiriman.status', 'Dikirim')
+                    ->orWhere('pengiriman.status', 'Diterima');
+            })
+            ->where('pesanan.id_user', Auth::id())
+            ->get();
+
+        // Ambil data detail pesanan dalam view
+        $pengirimanList->each(function ($pengiriman) {
+            $pengiriman->detailPesanan = DetailPesanan::select('detailpesanan.*', 'produk.nama_produk', 'produk.harga_satuan')
+                ->leftJoin('produk', 'detailpesanan.id_produk', '=', 'produk.id_produk')
+                ->where('detailpesanan.id_pesanan', $pengiriman->id_pesanan)
+                ->get();
+        });
+
+        return view('market.pesanandikirim', compact('pengirimanList'));
+    }
+
+
+    public function terimaPengiriman(Request $request, $id_pengiriman)
+    {
+        // Temukan pengiriman berdasarkan ID
+        $pengiriman = Pengiriman::findOrFail($id_pengiriman);
+
+        // Ubah status pengiriman menjadi 'Diterima'
+        $pengiriman->status = 'Diterima';
+        $pengiriman->save();
+
+        // Redirect atau kembalikan respons ke halaman sebelumnya
+        return redirect()->back()->with('success', 'Status pengiriman berhasil diubah.');
     }
 }

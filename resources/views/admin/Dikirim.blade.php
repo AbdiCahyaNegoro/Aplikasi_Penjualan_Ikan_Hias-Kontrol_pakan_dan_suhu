@@ -19,26 +19,22 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal Pengiriman</th>
-                                <th>Nama Pelanggan</th>
+                                <th>ID Pesanan</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($pengiriman as $key => $kirim)
+                            @foreach ($pengirimanList as $key => $kirim)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $kirim->tanggal_pengiriman }}</td>
-                                    <td>{{ $kirim->user_name }}</td>
+                                    <td>{{ $kirim->id_pesanan }}</td>
                                     <td>{{ $kirim->status }}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                             data-target="#detailPesanan{{ $kirim->id_pengiriman }}">
                                             Lihat Detail Pesanan
-                                        </button>
-                                        <button type="button" class="btn btn-success" data-toggle="modal"
-                                            data-target="#uploadResi{{ $kirim->id_pengiriman }}">
-                                            Upload Resi
                                         </button>
                                     </td>
                                 </tr>
@@ -50,7 +46,7 @@
         </div>
     </div>
 
-    @foreach ($pengiriman as $kirim)
+    @foreach ($pengirimanList as $kirim)
         <!-- Modal Detail Pesanan -->
         <div class="modal fade" id="detailPesanan{{ $kirim->id_pengiriman }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,33 +59,31 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <!-- Isi dengan informasi detail pesanan -->
-                        <p>Detail pesanan dapat ditampilkan di sini sesuai dengan pengiriman yang dipilih.</p>
+                        <!-- Isi detail pesanan -->
+                        <h5>Informasi Pesanan</h5>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nama Produk</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga Satuan</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($kirim->detailPesanan as $detail)
+                                    <tr>
+                                        <td>{{ $detail->nama_produk }}</td>
+                                        <td>{{ $detail->qty }}</td>
+                                        <td>{{ $detail->harga_satuan }}</td>
+                                        <td>{{ $detail->qty * $detail->harga_satuan }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Upload Resi -->
-        <div class="modal fade" id="uploadResi{{ $kirim->id_pengiriman }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Upload Resi Pengiriman</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                            <div class="form-group">
-                                <label for="foto_resi">Upload Foto Resi</label>
-                                <input type="file" class="form-control" name="foto_resi" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Upload</button>
                     </div>
                 </div>
             </div>
