@@ -14,8 +14,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $user = new User;
-        $user->name = "Abdi Cahya Negoro";
-        $user->email = "abdicahyan@gmail.com";
+        $user->name = "Admin Fish Fantasy";
+        $user->email = "admin@gmail.com";
         $user->password = bcrypt('12345');
         $user->leveluser = 1;
         $user->alamat = "Cikembar";
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $user->jeniskelamin = "L";
         $user->no_hp = "081212121212";
         $user->foto = "default.jpg";
-        $user->folder = 'assets/img/user/default.jpg';
+        $user->folder = 'assets/img/user';
         $user->save();
 
         $user = new User;
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
         $user->jeniskelamin = "L";
         $user->no_hp = "081212121212";
         $user->foto = "default.jpg";
-        $user->folder = 'assets/img/user/default.jpg';
+        $user->folder = 'assets/img/user';
         $user->save();
     }
 }
