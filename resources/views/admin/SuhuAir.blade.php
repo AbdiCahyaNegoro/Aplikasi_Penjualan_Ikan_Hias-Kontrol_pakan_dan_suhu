@@ -1,4 +1,7 @@
+<!-- resources/views/admin/SuhuAir.blade.php -->
+
 @extends('layouts.beranda.masterberanda')
+
 @section('content')
     <div class="container-fluid">
         <!-- Area Chart -->
@@ -17,4 +20,12 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('assets/js/chart.js') }}"></script>
+    <script>
+        var suhuData = @json($data);
+    </script>
+    <script src="{{ asset('assets/js/myAreaChart.js') }}"></script>
 @endsection

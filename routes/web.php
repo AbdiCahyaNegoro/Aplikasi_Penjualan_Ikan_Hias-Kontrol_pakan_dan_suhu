@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 //AKSES UMUM
 Route::get('/index', [App\Http\Controllers\Controller::class, 'tampildataproduk'])->name('tampildataproduk');
 Route::get('/', [App\Http\Controllers\ProdukController::class, 'tampildataproduk'])->name('tampildataproduk');
+Route::post('/suhuair/insertdata', [App\Http\Controllers\SuhuAirController::class, 'uploadDatadarialat']);
+
 
 
 //AKSES PENGGUNA
@@ -19,6 +21,7 @@ Route::middleware(CekLeveladmin::class)->group(function () {
     Route::get('/admin', [App\Http\Controllers\Controller::class, 'index'])->name('admin');
     Route::get('/beranda', [App\Http\Controllers\HomeController::class, 'BerandaAdmin'])->name('beranda');
     Route::get('/pakanikan', [App\Http\Controllers\PakanIkanController::class, 'pakanikan'])->name('pakanikan');
+    Route::post('/pakanikan/kasihmakan', [App\Http\Controllers\PakanIkanController::class, 'kasihmakan'])->name('kasihmakan');
     Route::get('/suhuair', [App\Http\Controllers\SuhuAirController::class, 'suhuair'])->name('suhuair');
     Route::get('/pelanggan', [App\Http\Controllers\PelangganController::class, 'pelanggan'])->name('tampilpelanggan');
 
